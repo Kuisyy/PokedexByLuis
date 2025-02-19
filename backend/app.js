@@ -4,29 +4,43 @@ import cors from 'cors';
 
 import connectDB from './config/db.js';
 import pokemonRoutes from './routes/pokemonRoutes.js';
+import { fetchAndSavePokemons } from './controllers/pokemonControllers.js';
+
 
 dotenv.config();
 
 const app = express();
 
-// Conectar con la base de datos MongoDB antes de iniciar el servidor
-connectDB();
+const startServer = async () => {
+  try {
+    // Conectar con la base de datos MongoDB
+    await connectDB();
 
-// Middleware
-app.use(express.json()); // Permitir JSON en las peticiones
-app.use(cors()); // Habilitar CORS
+    // Cargar los Pokémon en la base de datos
+    await fetchAndSavePokemons();
+    console.log('Pokémon iniciales cargados en la base de datos');
 
-// Rutas de la API
-app.use('/api', pokemonRoutes);
+    // Middleware
+    app.use(express.json()); // Permitir JSON en las peticiones
+    app.use(cors()); // Habilitar CORS
 
-// Middleware de manejo de errores
-app.use((err, req, res, next) => {
-  res.status(500).json({ message: 'Algo salió mal!' });
-});
+    // Rutas de la API
+    app.use('/api', pokemonRoutes);
 
-// Puerto del servidor
-const PORT = process.env.PORT || 5000;
+    // Middleware de manejo de errores
+    app.use((err, req, res, next) => {
+      res.status(500).json({ message: 'Algo salió mal!' });
+    });
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
+    const PORT = process.env.PORT || 5000;
+
+    // Arrancar el servidor
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en el puerto ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error en la inicialización del servidor:', error);
+  }
+};
+
+startServer();

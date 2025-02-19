@@ -7,6 +7,7 @@ import SearchPage from "../pages/SearchPage";
 import FavouritePage from "../pages/FavouritePage";
 import AboutPage from "../pages/AboutPage";
 import PokemonDetailPage from "../pages/PokemonDetailPage";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const router = createBrowserRouter([
     {
@@ -31,9 +32,9 @@ const router = createBrowserRouter([
             errorElement: <ErrorPage />,
             //loader: Loader permite hacer un fecth directo a la ruta
             loader: async ({params})=>{
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.name}`);
+                const response = await fetch(`${VITE_API_URL}/details/${params.name}`);
                 if (!response.ok){
-                    console.error("Error en la api de detalle");
+                    console.error("Error en la api en el endpoint details");
                 }
                 return await response.json();
             }

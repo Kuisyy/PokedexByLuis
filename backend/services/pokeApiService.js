@@ -149,7 +149,7 @@ export const getFavoritePokemons = async () => {
 };
 
 
-// export const detailsPokemon = async () => {};
+
 
 // export const listPokemons = async () => {};
 

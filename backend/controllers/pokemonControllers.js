@@ -1,3 +1,4 @@
+import Pokemon from "../models/PokemonModels.js";
 import { addFavsDB, deleteFavsDB, getFavoritePokemons, getPokemons, searchPokemonDB } from "../services/pokeApiService.js"; 
 import { savePokemonsToDB } from "../services/pokeApiService.js"; 
 
@@ -67,6 +68,17 @@ export const searchPokemon = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const listPokemons = async (req, res) => {
+  try {
+    const pokemons = await Pokemon.find(); // Obtener todos los Pokémon
+    res.status(200).json(pokemons);
+  } catch (error) {
+    console.error("Error al obtener los Pokémon:", error);
+    res.status(500).json({ message: "Error al obtener los Pokémon." });
+  }
+};
+
 
 
 

@@ -14,12 +14,12 @@ const PokemonDetailPage = () => {
     <div className="container mx-auto p-4">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <button 
-        className="mb-4 text-blue-800 hover:underline"
+        className="mb-4 bg-blue-300 text-blue-800 hover:underline"
         onClick={()=> navigate(-1)}
         >
             Volver
         </button>
-        <img src={pokemon.sprites.other.dream_world.front_default} alt={pokemon.name} className="h-48 w-48 mx-auto" />
+        <img src={pokemon.image} alt={pokemon.name} className="h-48 w-48 mx-auto" />
         <h1 className="capitalize text-3xl mb-4 text-center mt-2 font-bold">{pokemon.name}</h1>
 
         <div className="grid grid-cols-2 gap-6">

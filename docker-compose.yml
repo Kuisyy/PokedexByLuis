@@ -1,83 +1,36 @@
-version: '3.8'
-
+version: '3'
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: DockerfileFrontendLMH
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - CHOKIDAR_USEPOLLING=true # Activa polling para asegurar detección de cambios en Docker
-    depends_on:
-      - backend
-    networks:
-      - app-network
-
   backend:
     build:
       context: ./backend
-      dockerfile: DockerfileBackendLMH
+    container_name: backend
     ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
-    depends_on:
-      - database
-    command: >
-      sh -c "
-      composer install &&
-      composer show doctrine/dbal &&
-      php -S 0.0.0.0:8000 -t public"
-    networks:
-      - app-network
-
-  database:
-    image: mysql:8.0
-    ports:
-      - "3307:3306"
+      - "5000:5000"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: LMH_BD
-      MYSQL_USER: alumnoDAW
-      MYSQL_PASSWORD: passLMH
-    volumes:
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - database_data:/var/lib/mysql
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/pokedex
     networks:
       - app-network
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8080:80"
-    environment:
-      PMA_HOST: database
-      PMA_USER: user
-      PMA_PASSWORD: password
-    depends_on:
-      - database
-    networks:
-      - app-network
-
-  web:
+  frontend:
     build:
-      context: ./web
-      dockerfile: DockerfileWebLMH
+      context: ./frontend
+    container_name: frontend
     ports:
       - "80:80"
-    depends_on:
-      - frontend
-      - backend
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo_data:/data/db
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  database_data:

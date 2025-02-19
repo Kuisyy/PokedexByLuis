@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { addFavs, deleteFavs, fetchAndSavePokemons, getFavorites, searchPokemon } from "../controllers/pokemonControllers.js";
+import { addFavs, deleteFavs, fetchAndSavePokemons, getFavorites, listPokemons, searchPokemon } from "../controllers/pokemonControllers.js";
 
 
 const router = Router();
 
-router.post("/start", fetchAndSavePokemons);
-
+// Ruta para buscar un pokemon por nombre
 router.get("/details/:name", searchPokemon);
 
 // Ruta para agregar un Pokémon a favoritos
@@ -17,6 +16,7 @@ router.delete("/favorites/:name", deleteFavs);
 // Ruta para obtener todos los Pokémon favoritos
 router.get("/favorites", getFavorites);
 
-// router.get("/listPokemons", listPokemons);
+// Ruta para obtener todos los pokemons
+router.get("/listPokemons", listPokemons);
 
 export default router;

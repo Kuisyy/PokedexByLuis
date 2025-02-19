@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { ROUTES } from "../routes/paths";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -22,13 +24,13 @@ const SearchPage = () => {
 
     try {
       const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}`
+        `${VITE_API_URL}/details/${search.toLowerCase()}`
       );
       if (!response.ok) {
         throw new Error("Pokémon no encontrado");
       }
-      const pokemon = await response.json(); // Esperar a que se resuelva la promesa
-      navigate(`/search/${pokemon.name.toLowerCase()}`); // Navegar a la página de detalles
+      const pokemon = await response.json();
+      navigate(`${ROUTES.POKEMON}${pokemon.name.toLowerCase()}`);
     } catch (error) {
       toast.error(error.message, {
         style: {
