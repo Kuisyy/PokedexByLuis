@@ -27,7 +27,7 @@ const router = createBrowserRouter([
             element:<FavouritePage />
         },
         {
-            path:ROUTES.POKEMON,
+            path:"/details/:name",
             element:<PokemonDetailPage />,
             errorElement: <ErrorPage />,
             //loader: Loader permite hacer un fecth directo a la ruta

@@ -29,8 +29,7 @@ const SearchPage = () => {
       if (!response.ok) {
         throw new Error("Pokémon no encontrado");
       }
-      const pokemon = await response.json();
-      navigate(`${ROUTES.POKEMON}${pokemon.name.toLowerCase()}`);
+      navigate(`/details/${search.toLowerCase()}`);
     } catch (error) {
       toast.error(error.message, {
         style: {

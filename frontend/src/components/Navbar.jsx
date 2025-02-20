@@ -9,8 +9,8 @@ const Navbar = () => {
           
           <div className="space-x-5">
 
-          {/* Propiedad isActive es un callbecak que creo que eso me lo hacia */}
           <NavLink
+          to={ROUTES.HOME}
           className={({ isActive }) =>
             isActive
               ? "text-white text-2xl font-bold"

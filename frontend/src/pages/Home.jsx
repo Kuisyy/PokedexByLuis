@@ -63,7 +63,7 @@ const Home = () => {
               </button>
 
               <Link
-                to={`/details/${pokemon.name}`} // Actualizamos la ruta
+                to={`/details/${pokemon.name}`} 
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-800"
               >
                 Ver detalles

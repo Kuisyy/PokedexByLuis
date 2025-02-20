@@ -12,7 +12,7 @@ export const PokemonProvider = ({ children }) => {
   // Cargar los favoritos desde el backend
   useEffect(() => {
     fetchFavorites();
-  }, []);
+  }, [favourites]);
 
   // Función para obtener los favoritos desde el backend
   const fetchFavorites = async () => {
@@ -32,7 +32,8 @@ export const PokemonProvider = ({ children }) => {
 
   // Función para añadir un Pokémon a favoritos
   const addToFav = async (pokemon) => {
-    if (favourites.some((p) => p.id === pokemon.id)) {
+    // Verificar si el Pokémon ya está en los favoritos
+    if (favourites.some((p) => p.name === pokemon.name)) {
       toast.error("Pokemon ya en favs", {
         style: {
           background: "red",
@@ -40,20 +41,22 @@ export const PokemonProvider = ({ children }) => {
           color: "white",
         },
       });
-      return;
+      return; 
     }
-
+  
     try {
+      // Intentar añadir el Pokémon a favoritos
       const response = await fetch(`${VITE_API_URL}/favorites/${pokemon.name}`, {
         method: "POST",
       });
+  
       if (!response.ok) {
         throw new Error("Error al añadir Pokémon a favoritos");
       }
-
+  
       const addedPokemon = await response.json();
       setFavourites((prevFavourites) => [...prevFavourites, addedPokemon]);
-
+  
       toast.success("Pokemon añadido a favoritos", {
         style: {
           background: "green",
@@ -63,13 +66,20 @@ export const PokemonProvider = ({ children }) => {
       });
     } catch (error) {
       console.error("Error adding to favorites:", error);
+      toast.error("Error al añadir Pokémon a favoritos", {
+        style: {
+          background: "red",
+          border: "1px solid black",
+          color: "white",
+        },
+      });
     }
   };
 
   // Función para eliminar un Pokémon de favoritos
-  const deleteToFav = async (pokemonId) => {
+  const deleteToFav = async (pokemon) => {
     try {
-      const response = await fetch(`${VITE_API_URL}/favorites/${pokemonId}`, {
+      const response = await fetch(`${VITE_API_URL}/favorites/${pokemon.name}`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -77,7 +87,7 @@ export const PokemonProvider = ({ children }) => {
       }
 
       setFavourites((prevFavourites) =>
-        prevFavourites.filter((pokemon) => pokemon.id !== pokemonId)
+        prevFavourites.filter((pk) => pk.name !== pokemon.name)
       );
 
       toast.success("Pokemon eliminado de favoritos", {

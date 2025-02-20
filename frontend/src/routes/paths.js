@@ -1,6 +1,6 @@
 export const ROUTES = {
     HOME:'/',
+    SEARCH:'/search/:name',
     FAVOURITES:'/favourites',
-    POKEMON:'/details/:name',
     ABOUT:'/about'
 };

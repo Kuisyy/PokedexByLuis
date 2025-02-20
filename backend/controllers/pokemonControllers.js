@@ -3,21 +3,19 @@ import { addFavsDB, deleteFavsDB, getFavoritePokemons, getPokemons, searchPokemo
 import { savePokemonsToDB } from "../services/pokeApiService.js"; 
 
 // Controlador para obtener los Pokémon y guardarlos en MongoDB
-export const fetchAndSavePokemons = async (req, res) => {
+export const fetchAndSavePokemons = async () => {
   try {
     const pokemons = await getPokemons();
 
     if (pokemons.length === 0) {
-      return res.status(404).json({ message: "No se encontraron Pokémon para guardar." });
+      console.log("No se encontraron Pokémon para guardar.");
+      return;
     }
 
     await savePokemonsToDB(pokemons);
-
-    res.status(200).json({ message: "Pokémon guardados exitosamente en MongoDB." });
-
+    console.log("Pokémon guardados exitosamente en MongoDB.");
   } catch (error) {
     console.error("Error al obtener o guardar los Pokémon:", error);
-    res.status(500).json({ message: "Hubo un error al procesar los Pokémon." });
   }
 };
 

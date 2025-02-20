@@ -4,7 +4,7 @@ import { ROUTES } from "../routes/paths";
 
 
 const FavouritePage = () => {
-  const { favourites, deleteToFav } = usePokemon(); // Usamos deleteToFav del contexto
+  const { favourites, deleteToFav } = usePokemon(); 
 
   if (favourites.length === 0) {
     return (
@@ -39,15 +39,18 @@ const FavouritePage = () => {
             />
             <h3 className="text-xl font-bold capitalize">{pokemon.name}</h3>
             <button
-              onClick={() => deleteToFav(pokemon.id)} // Usamos el método del contexto para eliminar de favoritos
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
+              onClick={() => deleteToFav(pokemon)} // Usamos el método del contexto para eliminar de favoritos
+              className="mt-4  bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
             >
               Eliminar
             </button>
 
-            <Link to={`${ROUTES.POKEMON}/${pokemon.id}`} className="bg-amber-400 rounded-lg text-white mt-4 ml-2 px-4 py-2.5 transition-colors duration-300">
-              Ver detalles
-            </Link>
+            <Link
+                to={`/details/${pokemon.name}`} 
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+              >
+                Ver detalles
+              </Link>
           </div>
         ))}
       </div>

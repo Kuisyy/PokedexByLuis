@@ -18,7 +18,7 @@ const startServer = async () => {
 
     // Cargar los Pokémon en la base de datos
     await fetchAndSavePokemons();
-    console.log('Pokémon iniciales cargados en la base de datos');
+    console.log('Pokémon cargados en la base de datos');
 
     // Middleware
     app.use(express.json()); // Permitir JSON en las peticiones
