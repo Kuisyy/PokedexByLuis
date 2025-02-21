@@ -31,7 +31,9 @@ const Home = () => {
 
   if (isLoading) {
     return (
+      <div className="flex justify-center items-center h-screen">
         <MoonLoader color="#efda17" />
+      </div>
     );
   }
 
