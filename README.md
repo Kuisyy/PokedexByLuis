@@ -28,7 +28,7 @@ cd PokedexByLuis
 docker-compose up --build
 ```
 
-Una vez hecho esto con acceder a tu navegador web de confianza y poner la url http://localhost:80 funcionaria
+Una vez hecho esto esperar hasta el mensaje de Pokemons cargados correctamente y si no lo ves haces un docker logs backend hasta que se vea el mensaje, despues con acceder a tu navegador web de confianza y poner la url http://localhost:80 funcionaria
 
 ### 🚀 Objetivo
 El objetivo del proyecto es aprender y aplicar conocimientos en el desarrollo full-stack utilizando Node.js y React, al mismo tiempo que se mejora la capacidad de consumir APIs externas y gestionar bases de datos.
